@@ -21,7 +21,6 @@ namespace phlib {
 	namespace error_message {
 		static const char bad_int_argument[] = "argument passed is not a valid integer";
 		static const char bad_double_argument[] = "argument passed is not a valid double";
-		static const char bad_boolean_argument[] = "argument passed is not a valid boolean";
 		static const char bad_list_argument[] = "argument passed is not a valid list";
 	}
 
@@ -88,6 +87,26 @@ namespace phlib {
 				throw wrong_args_value_exception(error_message::bad_list_argument);
 			}
 			ret.push_back(getDouble(interp, v));
+		}
+
+		return ret;
+	}
+
+	std::vector<std::string> TclUtils::getStringVector(Tcl_Interp *interp, Tcl_Obj *objPtr) {
+		int length;
+		int rc = Tcl_ListObjLength(interp, objPtr, &length);
+		if (TCL_OK != rc) {
+			throw wrong_args_value_exception(error_message::bad_list_argument);
+		}
+
+		std::vector<std::string> ret;
+		for (int i = 0; i < length; ++i) {
+			Tcl_Obj* v;
+			rc = Tcl_ListObjIndex(interp, objPtr, i, &v);
+			if (TCL_OK != rc) {
+				throw wrong_args_value_exception(error_message::bad_list_argument);
+			}
+			ret.push_back(std::string(Tcl_GetStringFromObj(v, NULL)));
 		}
 
 		return ret;
