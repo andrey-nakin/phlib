@@ -14,14 +14,16 @@
 #ifndef POLYMORPHIC_H_
 #define POLYMORPHIC_H_
 
-#include <boost/noncopyable.hpp>
-
 namespace phlib {
 
-	class Polymorphic : boost::noncopyable {
+	class Polymorphic {
+
+		Polymorphic& operator=(const Polymorphic&);
+
 	protected:
 
 		Polymorphic() {}
+		Polymorphic(const Polymorphic&) {}
 
 	public:
 

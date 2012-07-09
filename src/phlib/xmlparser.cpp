@@ -49,7 +49,8 @@ XmlParser::XmlParser()
 
 void XmlParser::read(const TagName& root_tag, std::istream& source)
 {
-	int done = 0, len;
+	int done = 0;
+	std::streamsize len;
 	char	buffer[BufferSize];
 	Parser	parser(this);
 
@@ -63,7 +64,7 @@ void XmlParser::read(const TagName& root_tag, std::istream& source)
     len = source.gcount();
     done = source.eof();
 
-    if (!expat::XML_Parse(parser.parser, buffer, len, done))
+    if (!expat::XML_Parse(parser.parser, buffer, static_cast<int>(len), done))
       throw ParseError();
 	}
 }

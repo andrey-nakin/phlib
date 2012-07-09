@@ -124,6 +124,7 @@ namespace phlib {
 		static unsigned getUInt(Tcl_Interp *interp, Tcl_Obj *objPtr);
 		static long getLong(Tcl_Interp *interp, Tcl_Obj *objPtr);
 		static double getDouble(Tcl_Interp *interp, Tcl_Obj *objPtr);
+		static std::vector<unsigned> getUIntVector(Tcl_Interp *interp, Tcl_Obj *objPtr);
 		static std::vector<double> getDoubleVector(Tcl_Interp *interp, Tcl_Obj *objPtr);
 		static std::vector<std::string> getStringVector(Tcl_Interp *interp, Tcl_Obj *objPtr);
 
