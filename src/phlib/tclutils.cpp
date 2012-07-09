@@ -72,6 +72,26 @@ namespace phlib {
 		return ret;
 	}
 
+	std::vector<unsigned> TclUtils::getUIntVector(Tcl_Interp *interp, Tcl_Obj *objPtr) {
+		int length;
+		int rc = Tcl_ListObjLength(interp, objPtr, &length);
+		if (TCL_OK != rc) {
+			throw wrong_args_value_exception(error_message::bad_list_argument);
+		}
+
+		std::vector<unsigned> ret;
+		for (int i = 0; i < length; ++i) {
+			Tcl_Obj* v;
+			rc = Tcl_ListObjIndex(interp, objPtr, i, &v);
+			if (TCL_OK != rc) {
+				throw wrong_args_value_exception(error_message::bad_list_argument);
+			}
+			ret.push_back(getUInt(interp, v));
+		}
+
+		return ret;
+	}
+
 	std::vector<double> TclUtils::getDoubleVector(Tcl_Interp *interp, Tcl_Obj *objPtr) {
 		int length;
 		int rc = Tcl_ListObjLength(interp, objPtr, &length);
