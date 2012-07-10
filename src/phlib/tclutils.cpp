@@ -13,7 +13,7 @@
 
 #include	"tclutils.h"
 #include	<string.h>
-#include	<limits.h>
+#include	<limits>
 #include	<iostream>
 
 namespace phlib {
@@ -47,9 +47,14 @@ namespace phlib {
 
 		if (
 				TCL_OK != Tcl_GetLongFromObj(interp, objPtr, &ret)
-				|| ret < 0L
-				|| ret > static_cast<long>(UINT_MAX))
-			throw wrong_args_value_exception(error_message::bad_int_argument);
+				|| ret < std::numeric_limits<unsigned>::min()
+				|| ret > std::numeric_limits<unsigned>::max()) {
+
+			std::string msg("expected unsigned integer but got \"");
+			msg += Tcl_GetStringFromObj(objPtr, NULL);
+			msg += "\"";
+			throw wrong_args_value_exception(msg.c_str());
+		}
 
 		return static_cast<unsigned>(ret);
 	}
