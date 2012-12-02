@@ -11,10 +11,10 @@
  *
  */
 
-#include	"floatvector.h"
-#include	"memory.h"
+#include	<memory.h>
 #include	<iterator>
 #include	<math.h>
+#include	"floatvector.h"
 
 namespace phlib {
 

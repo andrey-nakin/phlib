@@ -28,17 +28,18 @@ protected:
 
 	typedef	std::vector<std::string>	TitleVector;
 
+  bool  needDataLine;
+	std::ios_base*	controlledStream;
+	std::streamsize	maxPrecision;
 	int	lineCounter;  // text line counter
   int dataLineCounter;  // data line counter (when needDataLine == true)
   TitleVector  dataTitles;
   float_vector  dataLine;
-  bool  needDataLine;
-	std::ios_base*	controlledStream;
-	std::streamsize	maxPrecision;
 	bool newLine, firstLine;
   std::vector<std::string>  filenames;
 
-  inline TraceReader() : needDataLine(false), controlledStream(0), maxPrecision(-1) {}
+  inline TraceReader() : needDataLine(false), controlledStream(0), maxPrecision(-1),
+		  lineCounter(0), dataLineCounter(0), dataLine(0), newLine(false), firstLine(false) {}
   virtual ~TraceReader(){}
 
 	virtual bool isZip(const char* filename);
