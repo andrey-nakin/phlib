@@ -127,6 +127,9 @@ namespace phlib {
 		static std::vector<unsigned> getUIntVector(Tcl_Interp *interp, Tcl_Obj *objPtr);
 		static std::vector<double> getDoubleVector(Tcl_Interp *interp, Tcl_Obj *objPtr);
 		static std::vector<std::string> getStringVector(Tcl_Interp *interp, Tcl_Obj *objPtr);
+		static std::vector<Tcl_Obj*> getObjectVector(Tcl_Interp *interp, Tcl_Obj *objPtr);
+
+		static Tcl_Obj* toListOfDouble(Tcl_Interp *interp, const std::vector<double>& v);
 
 		static void notifyProcError(Tcl_Interp *interp, const std::exception& ex, const char* default_message);
 

@@ -137,6 +137,36 @@ namespace phlib {
 		return ret;
 	}
 
+	std::vector<Tcl_Obj*> TclUtils::getObjectVector(Tcl_Interp *interp, Tcl_Obj *objPtr) {
+		int length;
+		int rc = Tcl_ListObjLength(interp, objPtr, &length);
+		if (TCL_OK != rc) {
+			throw wrong_args_value_exception(error_message::bad_list_argument);
+		}
+
+		std::vector<Tcl_Obj*> ret;
+		for (int i = 0; i < length; ++i) {
+			Tcl_Obj* v;
+			rc = Tcl_ListObjIndex(interp, objPtr, i, &v);
+			if (TCL_OK != rc) {
+				throw wrong_args_value_exception(error_message::bad_list_argument);
+			}
+			ret.push_back(v);
+		}
+
+		return ret;
+	}
+
+	Tcl_Obj* TclUtils::toListOfDouble(Tcl_Interp *interp, const std::vector<double>& v) {
+		Tcl_Obj *ret = Tcl_NewListObj(0, NULL);
+
+		for (std::vector<double>::const_iterator i = v.begin(), end = v.end(); i != end; ++i) {
+			Tcl_ListObjAppendElement(interp, ret, Tcl_NewDoubleObj(*i));
+		}
+
+		return ret;
+	}
+
 	void TclUtils::notifyProcError(Tcl_Interp *interp, const std::exception& ex, const char* default_message) {
 		const char *message = ex.what() && *ex.what() ? ex.what() : default_message;
 		char*	buf = Tcl_Alloc(static_cast<int>(::strlen(message)) + 1);
