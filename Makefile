@@ -1,6 +1,5 @@
 # dependendences
-TCL_INCLUDE_DIR = /usr/include/tcl8.5
-INCLUDE_DIR += -I$(TCL_INCLUDE_DIR)
+INCLUDE_DIR = -I/usr/include/tcl8.5
 
 # compiler settings
 CPPFLAGS += -O3 -Wall $(INCLUDE_DIR)
